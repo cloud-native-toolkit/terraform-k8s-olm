@@ -5,6 +5,8 @@ SCRIPT_DIR=$(cd $(dirname $0); pwd -P)
 CLUSTER_TYPE="$1"
 NAMESPACE="$2"
 
+KUBECONFIG="${SCRIPT_DIR}/.kube/config"
+
 echo "Verifying resources in $NAMESPACE namespace"
 
 # TODO: For now we will exclude Pending status from failed statuses. Need to revisit
