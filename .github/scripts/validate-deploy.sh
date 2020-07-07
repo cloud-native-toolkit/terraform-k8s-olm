@@ -3,9 +3,14 @@
 SCRIPT_DIR=$(cd $(dirname $0); pwd -P)
 
 CLUSTER_TYPE="$1"
-NAMESPACE="$2"
 
 export KUBECONFIG="${SCRIPT_DIR}/.kube/config"
+
+if [[ "${CLUSTER_TYPE}" == "ocp4" ]]; then
+  NAMESPACE="openshift-operator-lifecycle-manager"
+else
+  NAMESPACE="olm"
+fi
 
 echo "Verifying resources in $NAMESPACE namespace"
 
