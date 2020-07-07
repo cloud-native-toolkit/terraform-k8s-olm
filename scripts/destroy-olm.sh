@@ -2,10 +2,6 @@
 
 SCRIPT_DIR=$(cd $(dirname $0); pwd -P)
 
-if [[ -n "${KUBECONFIG_IKS}" ]]; then
-  export KUBECONFIG="${KUBECONFIG_IKS}"
-fi
-
 echo "CLUSTER_TYPE: ${CLUSTER_TYPE}"
 if [[ "${CLUSTER_TYPE}" == "ocp4" ]]; then
   echo "Cluster version already had OLM: ${CLUSTER_VERSION}"
