@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 
-SCRIPT_DIR=$(cd $(dirname $0); pwd -P)
+SCRIPT_DIR=$(cd $(dirname "$0"); pwd -P)
 
 CLUSTER_TYPE="$1"
 
 export KUBECONFIG="${SCRIPT_DIR}/.kube/config"
 
-if [[ "${CLUSTER_TYPE}" == "ocp4" ]]; then
+if [[ "${CLUSTER_TYPE}" =~ ocp4 ]]; then
   NAMESPACE="openshift-operator-lifecycle-manager"
 else
   NAMESPACE="olm"
 fi
 
-echo "Verifying resources in $NAMESPACE namespace"
+echo "Verifying resources in ${NAMESPACE} namespace"
 
 # TODO: For now we will exclude Pending status from failed statuses. Need to revisit
 PODS=$(kubectl get -n "${NAMESPACE}" pods -o jsonpath='{range .items[*]}{.status.phase}{": "}{.kind}{"/"}{.metadata.name}{"\n"}{end}' | grep -v "Running" | grep -v "Succeeded" | grep -v "Pending")
