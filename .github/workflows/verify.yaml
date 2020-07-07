@@ -36,15 +36,6 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Validate config
-        run: |
-          echo "Github sha: ${{ github.sha }}"
-          echo "Github ref: ${{ github.ref }}"
-          if [ -z "${NAMESPACE}" ]; then
-            echo "The NAMESPACE secret has not been set within the Git repo"
-            exit 1
-          fi
-
       - name: Checkout
         uses: actions/checkout@v1
 
