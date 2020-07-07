@@ -16,7 +16,7 @@ resource "null_resource" "deploy_operator_lifecycle_manager" {
     command = "${path.module}/scripts/deploy-olm.sh ${self.triggers.OLM_VERSION}"
 
     environment = {
-      KUBECONFIG_IKS  = self.triggers.KUBECONFIG
+      KUBECONFIG      = self.triggers.KUBECONFIG
       CLUSTER_TYPE    = self.triggers.CLUSTER_TYPE
       CLUSTER_VERSION = self.triggers.CLUSTER_VERSION
     }
@@ -27,7 +27,7 @@ resource "null_resource" "deploy_operator_lifecycle_manager" {
     command = "${path.module}/scripts/destroy-olm.sh"
 
     environment = {
-      KUBECONFIG_IKS  = self.triggers.KUBECONFIG
+      KUBECONFIG      = self.triggers.KUBECONFIG
       CLUSTER_TYPE    = self.triggers.CLUSTER_TYPE
       CLUSTER_VERSION = self.triggers.CLUSTER_VERSION
     }
