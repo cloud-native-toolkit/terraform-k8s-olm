@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+SCRIPT_DIR=$(cd $(dirname "$0"); pwd -P)
+
 OLM_VERSION="$1"
 
 echo "CLUSTER_TYPE: ${CLUSTER_TYPE}"
@@ -13,4 +15,4 @@ if [[ "${CLUSTER_TYPE}" == "ocp3" ]]; then
   OLM_VERSION="0.14.1"
 fi
 
-curl -sL "https://github.com/operator-framework/operator-lifecycle-manager/releases/download/${OLM_VERSION}/install.sh" | bash -s "${OLM_VERSION}"
+"${SCRIPT_DIR}/install.sh" "${OLM_VERSION}"
