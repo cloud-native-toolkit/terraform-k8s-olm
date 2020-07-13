@@ -1,0 +1,40 @@
+name: Publish assets
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  publish-assets:
+    runs-on: ubuntu-latest
+
+    env:
+      DIST_DIR: ./dist
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Install yq
+        run: |
+          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CC86BB64
+          sudo add-apt-repository ppa:rmescandon/yq
+          sudo apt update
+          sudo apt install yq -y
+
+      - name: Build module.yaml
+        run: |
+          ./.github/scripts/build-module-metadata.sh ${{ github.event.release.tag_name }} ${{ env.DIST_DIR }} ${{ github.repository }}
+
+      - name: Upload module.yaml
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ${{ env.DIST_DIR }}/module.yaml
+          asset_name: module.yaml
+          asset_content_type: application/octet-stream
