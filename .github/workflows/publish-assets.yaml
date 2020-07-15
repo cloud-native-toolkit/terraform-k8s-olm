@@ -11,6 +11,7 @@ jobs:
 
     env:
       DIST_DIR: ./dist
+      PUBLISH_BRANCH: gh-pages
 
     steps:
       - name: Checkout
@@ -28,13 +29,22 @@ jobs:
       - name: Build module.yaml
         run: |
           ./.github/scripts/build-module-metadata.sh ${{ github.event.release.tag_name }} ${{ env.DIST_DIR }} ${{ github.repository }}
+          cp README.md ${{ env.DIST_DIR }}
+          mkdir -p ./scripts && cp ./.github/scripts/merge-module-metadata.sh ./scripts
 
-      - name: Upload module.yaml
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ${{ env.DIST_DIR }}/module.yaml
-          asset_name: module.yaml
-          asset_content_type: application/octet-stream
+          ref: ${{ env.PUBLISH_BRANCH }}
+          clean: false
+
+      - name: Build index.yaml
+        run: |
+          ./scripts/merge-module-metadata.sh ${{ env.DIST_DIR }}
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ${{ env.DIST_DIR }}
+          publish_branch: ${{ env.PUBLISH_BRANCH }}

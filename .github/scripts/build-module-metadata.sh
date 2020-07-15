@@ -19,9 +19,11 @@ mkdir -p "${DEST_DIR}"
 
 cp "${MODULE_DIR}/module.yaml" "${DEST_DIR}/module.yaml"
 
+echo "id: github.com/${REPO_SLUG}" > "${DEST_DIR}/module.yaml"
+cat "${MODULE_DIR}/module.yaml" >> "${DEST_DIR}/module.yaml"
+
 PREFIX='versions[0].'
 
-yq w -i "${DEST_DIR}/module.yaml" "id" "github.com/${REPO_SLUG}"
 yq w -i "${DEST_DIR}/module.yaml" "${PREFIX}version" "${VERSION}"
 
 cat "${MODULE_DIR}/variables.tf" | \
