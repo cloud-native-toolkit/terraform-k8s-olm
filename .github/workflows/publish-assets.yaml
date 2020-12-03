@@ -19,28 +19,12 @@ jobs:
         with:
           ref: ${{ github.event.release.tag_name }}
 
-      - name: Install yq
-        run: |
-          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CC86BB64
-          sudo add-apt-repository ppa:rmescandon/yq
-          sudo apt update
-          sudo apt install yq -y
-
-      - name: Build module.yaml
-        run: |
-          ./.github/scripts/build-module-metadata.sh ${{ github.event.release.tag_name }} ${{ env.DIST_DIR }} ${{ github.repository }}
-          cp README.md ${{ env.DIST_DIR }}
-          mkdir -p ./scripts && cp ./.github/scripts/merge-module-metadata.sh ./scripts
-
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: Build catalog
+        uses: ibm-garage-cloud/action-module-catalog@main
         with:
-          ref: ${{ env.PUBLISH_BRANCH }}
-          clean: false
-
-      - name: Build index.yaml
-        run: |
-          ./scripts/merge-module-metadata.sh ${{ env.DIST_DIR }}
+          tagName: ${{ github.event.release.tag_name }}
+          distDir: ${{ env.DIST_DIR }}
+          publishBranch: ${{ env.PUBLISH_BRANCH }}
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
