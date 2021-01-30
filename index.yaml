@@ -3,48 +3,87 @@ name: olm
 type: terraform
 description: Installs Operator Lifecycle Manager in the cluster
 platforms:
-- kubernetes
-- ocp3
-- ocp4
+  - kubernetes
+  - ocp3
+  - ocp4
 tags:
-- operators
+  - operators
 versions:
-- dependencies:
-  - id: cluster
-    refs:
-    - source: github.com/ibm-garage-cloud/terraform-ibm-container-platform
-      version: ">= 1.7.0"
-    - source: github.com/ibm-garage-cloud/terraform-k8s-ocp-cluster
-      version: ">= 2.0.0"
-  variables:
-  - name: cluster_config_file
-    moduleRef:
-      id: cluster
-      output: config_file_path
-    type: string
-    description: Cluster config file for Kubernetes cluster.
-  - name: cluster_type
-    moduleRef:
-      id: cluster
-      output: platform
-      path: type_code
-    type: string
-    description: The type of cluster (openshift or kubernetes)
-  - name: cluster_version
-    moduleRef:
-      id: cluster
-      output: platform
-      path: version
-    type: string
-    description: The version of cluster
-  - name: olm_version
-    type: string
-    description: The version of olm that will be installed
-    optional: true
-  version: v1.2.2
-  outputs:
-  - name: olm_namespace
-    description: Namespace where OLM is running. The value will be different between
-      OCP 4.3 and IKS/OCP 3.11
-  - name: target_namespace
-    description: Namespace where operatoes will be installed
+  - dependencies:
+      - id: cluster
+        refs:
+          - source: github.com/ibm-garage-cloud/terraform-ibm-container-platform
+            version: ">= 1.7.0"
+          - source: github.com/ibm-garage-cloud/terraform-k8s-ocp-cluster
+            version: ">= 2.0.0"
+    variables:
+      - name: cluster_config_file
+        moduleRef:
+          id: cluster
+          output: config_file_path
+        type: string
+        description: Cluster config file for Kubernetes cluster.
+      - name: cluster_type
+        moduleRef:
+          id: cluster
+          output: platform
+          path: type_code
+        type: string
+        description: The type of cluster (openshift or kubernetes)
+      - name: cluster_version
+        moduleRef:
+          id: cluster
+          output: platform
+          path: version
+        type: string
+        description: The version of cluster
+      - name: olm_version
+        scope: ignore
+        type: string
+        description: The version of olm that will be installed
+        default: 0.17.0
+        optional: true
+    version: v1.2.3
+    outputs:
+      - name: olm_namespace
+        description: Namespace where OLM is running. The value will be different between OCP 4.3 and IKS/OCP 3.11
+      - name: target_namespace
+        description: Namespace where operatoes will be installed
+  - dependencies:
+      - id: cluster
+        refs:
+          - source: github.com/ibm-garage-cloud/terraform-ibm-container-platform
+            version: ">= 1.7.0"
+          - source: github.com/ibm-garage-cloud/terraform-k8s-ocp-cluster
+            version: ">= 2.0.0"
+    variables:
+      - name: cluster_config_file
+        moduleRef:
+          id: cluster
+          output: config_file_path
+        type: string
+        description: Cluster config file for Kubernetes cluster.
+      - name: cluster_type
+        moduleRef:
+          id: cluster
+          output: platform
+          path: type_code
+        type: string
+        description: The type of cluster (openshift or kubernetes)
+      - name: cluster_version
+        moduleRef:
+          id: cluster
+          output: platform
+          path: version
+        type: string
+        description: The version of cluster
+      - name: olm_version
+        type: string
+        description: The version of olm that will be installed
+        optional: true
+    version: v1.2.2
+    outputs:
+      - name: olm_namespace
+        description: Namespace where OLM is running. The value will be different between OCP 4.3 and IKS/OCP 3.11
+      - name: target_namespace
+        description: Namespace where operatoes will be installed
