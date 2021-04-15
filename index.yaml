@@ -28,15 +28,13 @@ versions:
       - name: cluster_type
         moduleRef:
           id: cluster
-          output: platform
-          path: type_code
+          output: platform.type_code
         type: string
         description: The type of cluster (openshift or kubernetes)
       - name: cluster_version
         moduleRef:
           id: cluster
-          output: platform
-          path: version
+          output: platform.version
         type: string
         description: The version of cluster
       - name: olm_version
