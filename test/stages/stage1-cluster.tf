@@ -10,6 +10,7 @@ module "dev_cluster" {
   exists                  = true
   cos_id                  = ""
   vpc_subnet_count        = 1
+  vpc_subnets             = []
   vpc_name                = ""
   login                   = "true"
 }
