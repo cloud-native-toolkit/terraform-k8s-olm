@@ -9,12 +9,12 @@ jobs:
     strategy:
       matrix:
         repo:
-          - ibm-garage-cloud/ibm-garage-iteration-zero
-          - ibm-garage-cloud/garage-terraform-modules
+          - cloud-native-toolkit/ibm-garage-iteration-zero
+          - cloud-native-toolkit/garage-terraform-modules
 
     steps:
       - name: Repository dispatch ${{ matrix.repo }}
-        uses: ibm-garage-cloud/action-repository-dispatch@main
+        uses: cloud-native-toolkit/action-repository-dispatch@main
         with:
           notifyRepo: ${{ matrix.repo }}
           eventType: released
