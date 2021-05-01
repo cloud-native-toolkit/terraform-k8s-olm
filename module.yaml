@@ -17,6 +17,8 @@ versions:
           version: ">= 1.0.0"
         - source: github.com/ibm-garage-cloud/terraform-k8s-ocp-cluster
           version: ">= 2.0.0"
+        - source: github.com/ibm-garage-cloud/terraform-ocp-login
+          version: ">= 1.0.0"
   variables:
     - name: cluster_config_file
       moduleRef:
