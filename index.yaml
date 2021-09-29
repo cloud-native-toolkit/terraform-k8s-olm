@@ -16,6 +16,50 @@ versions:
             version: ">= 1.7.0"
           - source: github.com/ibm-garage-cloud/terraform-ibm-ocp-vpc
             version: ">= 1.0.0"
+          - source: github.com/ibm-garage-cloud/terraform-ibm-iks-vpc
+            version: ">= 1.0.0"
+          - source: github.com/ibm-garage-cloud/terraform-k8s-ocp-cluster
+            version: ">= 2.0.0"
+          - source: github.com/ibm-garage-cloud/terraform-ocp-login
+            version: ">= 1.0.0"
+    variables:
+      - name: cluster_config_file
+        moduleRef:
+          id: cluster
+          output: config_file_path
+        type: string
+        description: Cluster config file for Kubernetes cluster.
+      - name: cluster_type
+        moduleRef:
+          id: cluster
+          output: platform.type_code
+        type: string
+        description: The type of cluster (openshift or kubernetes)
+      - name: cluster_version
+        moduleRef:
+          id: cluster
+          output: platform.version
+        type: string
+        description: The version of cluster
+      - name: olm_version
+        scope: ignore
+        type: string
+        description: The version of olm that will be installed
+        default: 0.18.1
+        optional: true
+    version: v1.3.2
+    outputs:
+      - name: olm_namespace
+        description: Namespace where OLM is running. The value will be different between OCP 4.3 and IKS/OCP 3.11
+      - name: target_namespace
+        description: Namespace where operatoes will be installed
+  - dependencies:
+      - id: cluster
+        refs:
+          - source: github.com/ibm-garage-cloud/terraform-ibm-container-platform
+            version: ">= 1.7.0"
+          - source: github.com/ibm-garage-cloud/terraform-ibm-ocp-vpc
+            version: ">= 1.0.0"
           - source: github.com/ibm-garage-cloud/terraform-k8s-ocp-cluster
             version: ">= 2.0.0"
           - source: github.com/ibm-garage-cloud/terraform-ocp-login
