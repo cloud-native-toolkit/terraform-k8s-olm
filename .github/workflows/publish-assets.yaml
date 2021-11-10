@@ -20,7 +20,7 @@ jobs:
           ref: ${{ github.event.release.tag_name }}
 
       - name: Build catalog
-        uses: ibm-garage-cloud/action-module-catalog@main
+        uses: ibm-garage-cloud/action-module-catalog@v1
         with:
           tagName: ${{ github.event.release.tag_name }}
           distDir: ${{ env.DIST_DIR }}
