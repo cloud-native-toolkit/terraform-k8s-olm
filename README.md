@@ -13,7 +13,7 @@ module "dev_software_olm_release" {
   cluster_config_file      = pathexpand("~/.kube/config")
   cluster_version          = "3.11"
   cluster_type             = "ocp3"
-  olm_version		   = "v0.20.0"
+  olm_version              = "v0.20.0"
 }
 ```
 
