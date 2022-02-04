@@ -17,5 +17,5 @@ variable "cluster_config_file" {
 variable "olm_version" {
   type        = string
   description = "The version of olm that will be installed"
-  default     = "0.18.1"
+  default     = "v0.18.1"
 }
