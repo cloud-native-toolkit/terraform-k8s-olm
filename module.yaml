@@ -1,6 +1,9 @@
 name: olm
 type: terraform
 description: Installs Operator Lifecycle Manager in the cluster
+documentation: |
+  If the cluster is OpenShift 4.x and already has OLM installed then the module does not install anything. It can still 
+  be used to export the olm namespaces for use by downstream modules.
 platforms:
   - kubernetes
   - ocp3
@@ -10,17 +13,11 @@ tags:
 versions:
 - dependencies:
     - id: cluster
-      refs:
-        - source: github.com/ibm-garage-cloud/terraform-ibm-container-platform
-          version: ">= 1.7.0"
-        - source: github.com/ibm-garage-cloud/terraform-ibm-ocp-vpc
-          version: ">= 1.0.0"
-        - source: github.com/ibm-garage-cloud/terraform-ibm-iks-vpc
-          version: ">= 1.0.0"
-        - source: github.com/ibm-garage-cloud/terraform-k8s-ocp-cluster
-          version: ">= 2.0.0"
-        - source: github.com/ibm-garage-cloud/terraform-ocp-login
-          version: ">= 1.0.0"
+      interface: github.com/cloud-native-toolkit/automation-modules#cluster
+      refs: []
+  providers:
+    - name: clis
+      source: "cloud-native-toolkit/clis"
   variables:
     - name: cluster_config_file
       moduleRef:

@@ -4,12 +4,17 @@ locals {
   target_namespace   = var.cluster_type == "ocp4" ? "openshift-operators" : "operators"
 }
 
+data clis_check clis {
+  clis = ["kubectl","jq"]
+}
+
 resource "null_resource" "deploy_operator_lifecycle_manager" {
   triggers = {
     KUBECONFIG      = var.cluster_config_file
     CLUSTER_TYPE    = var.cluster_type
     CLUSTER_VERSION = var.cluster_version
     OLM_VERSION     = var.olm_version
+    BIN_DIR         = data.clis_check.clis.bin_dir
   }
 
   provisioner "local-exec" {
@@ -19,6 +24,7 @@ resource "null_resource" "deploy_operator_lifecycle_manager" {
       KUBECONFIG      = self.triggers.KUBECONFIG
       CLUSTER_TYPE    = self.triggers.CLUSTER_TYPE
       CLUSTER_VERSION = self.triggers.CLUSTER_VERSION
+      BIN_DIR         = self.triggers.BIN_DIR
     }
   }
 
@@ -30,6 +36,7 @@ resource "null_resource" "deploy_operator_lifecycle_manager" {
       KUBECONFIG      = self.triggers.KUBECONFIG
       CLUSTER_TYPE    = self.triggers.CLUSTER_TYPE
       CLUSTER_VERSION = self.triggers.CLUSTER_VERSION
+      BIN_DIR         = self.triggers.BIN_DIR
     }
   }
 }

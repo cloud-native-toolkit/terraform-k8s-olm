@@ -1,22 +1,11 @@
+name: Notify
+
 on:
   release:
     types: [published]
 
 jobs:
   notify:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        repo:
-          - cloud-native-toolkit/ibm-garage-iteration-zero
-          - cloud-native-toolkit/garage-terraform-modules
-
-    steps:
-      - name: Repository dispatch ${{ matrix.repo }}
-        uses: cloud-native-toolkit/action-repository-dispatch@main
-        with:
-          notifyRepo: ${{ matrix.repo }}
-          eventType: released
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+    uses: cloud-native-toolkit/action-workflows/.github/workflows/notify.yaml@v1
+    secrets:
+      TOKEN: ${{ secrets.TOKEN }}
