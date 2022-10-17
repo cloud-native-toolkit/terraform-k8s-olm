@@ -11,17 +11,56 @@ tags:
 versions:
   - dependencies:
       - id: cluster
+        interface: github.com/cloud-native-toolkit/automation-modules#cluster
+        refs: []
+    providers:
+      - name: clis
+        source: cloud-native-toolkit/clis
+    variables:
+      - name: cluster_type
+        type: string
+        description: The type of cluster (openshift or kubernetes)
+        moduleRef:
+          id: cluster
+          output: platform.type_code
+      - name: cluster_version
+        type: string
+        description: The version of cluster
+        moduleRef:
+          id: cluster
+          output: platform.version
+      - name: cluster_config_file
+        type: string
+        description: Cluster config file for Kubernetes cluster.
+        moduleRef:
+          id: cluster
+          output: config_file_path
+      - name: olm_version
+        type: string
+        description: The version of olm that will be installed
+        default: 0.18.1
+        scope: ignore
+    version: v1.3.3
+    outputs:
+      - name: olm_namespace
+        description: >-
+          Namespace where OLM is running. The value will be different between
+          OCP 4.3 and IKS/OCP 3.11
+      - name: target_namespace
+        description: Namespace where operatoes will be installed
+  - dependencies:
+      - id: cluster
         refs:
           - source: github.com/ibm-garage-cloud/terraform-ibm-container-platform
-            version: ">= 1.7.0"
+            version: '>= 1.7.0'
           - source: github.com/ibm-garage-cloud/terraform-ibm-ocp-vpc
-            version: ">= 1.0.0"
+            version: '>= 1.0.0'
           - source: github.com/ibm-garage-cloud/terraform-ibm-iks-vpc
-            version: ">= 1.0.0"
+            version: '>= 1.0.0'
           - source: github.com/ibm-garage-cloud/terraform-k8s-ocp-cluster
-            version: ">= 2.0.0"
+            version: '>= 2.0.0'
           - source: github.com/ibm-garage-cloud/terraform-ocp-login
-            version: ">= 1.0.0"
+            version: '>= 1.0.0'
     variables:
       - name: cluster_config_file
         moduleRef:
@@ -50,20 +89,22 @@ versions:
     version: v1.3.2
     outputs:
       - name: olm_namespace
-        description: Namespace where OLM is running. The value will be different between OCP 4.3 and IKS/OCP 3.11
+        description: >-
+          Namespace where OLM is running. The value will be different between
+          OCP 4.3 and IKS/OCP 3.11
       - name: target_namespace
         description: Namespace where operatoes will be installed
   - dependencies:
       - id: cluster
         refs:
           - source: github.com/ibm-garage-cloud/terraform-ibm-container-platform
-            version: ">= 1.7.0"
+            version: '>= 1.7.0'
           - source: github.com/ibm-garage-cloud/terraform-ibm-ocp-vpc
-            version: ">= 1.0.0"
+            version: '>= 1.0.0'
           - source: github.com/ibm-garage-cloud/terraform-k8s-ocp-cluster
-            version: ">= 2.0.0"
+            version: '>= 2.0.0'
           - source: github.com/ibm-garage-cloud/terraform-ocp-login
-            version: ">= 1.0.0"
+            version: '>= 1.0.0'
     variables:
       - name: cluster_config_file
         moduleRef:
@@ -92,20 +133,22 @@ versions:
     version: v1.3.1
     outputs:
       - name: olm_namespace
-        description: Namespace where OLM is running. The value will be different between OCP 4.3 and IKS/OCP 3.11
+        description: >-
+          Namespace where OLM is running. The value will be different between
+          OCP 4.3 and IKS/OCP 3.11
       - name: target_namespace
         description: Namespace where operatoes will be installed
   - dependencies:
       - id: cluster
         refs:
           - source: github.com/ibm-garage-cloud/terraform-ibm-container-platform
-            version: ">= 1.7.0"
+            version: '>= 1.7.0'
           - source: github.com/ibm-garage-cloud/terraform-ibm-ocp-vpc
-            version: ">= 1.0.0"
+            version: '>= 1.0.0'
           - source: github.com/ibm-garage-cloud/terraform-k8s-ocp-cluster
-            version: ">= 2.0.0"
+            version: '>= 2.0.0'
           - source: github.com/ibm-garage-cloud/terraform-ocp-login
-            version: ">= 1.0.0"
+            version: '>= 1.0.0'
     variables:
       - name: cluster_config_file
         moduleRef:
@@ -136,20 +179,22 @@ versions:
     version: v1.3.0
     outputs:
       - name: olm_namespace
-        description: Namespace where OLM is running. The value will be different between OCP 4.3 and IKS/OCP 3.11
+        description: >-
+          Namespace where OLM is running. The value will be different between
+          OCP 4.3 and IKS/OCP 3.11
       - name: target_namespace
         description: Namespace where operatoes will be installed
   - dependencies:
       - id: cluster
         refs:
           - source: github.com/ibm-garage-cloud/terraform-ibm-container-platform
-            version: ">= 1.7.0"
+            version: '>= 1.7.0'
           - source: github.com/ibm-garage-cloud/terraform-ibm-ocp-vpc
-            version: ">= 1.0.0"
+            version: '>= 1.0.0'
           - source: github.com/ibm-garage-cloud/terraform-k8s-ocp-cluster
-            version: ">= 2.0.0"
+            version: '>= 2.0.0'
           - source: github.com/ibm-garage-cloud/terraform-ocp-login
-            version: ">= 1.0.0"
+            version: '>= 1.0.0'
     variables:
       - name: cluster_config_file
         moduleRef:
@@ -180,20 +225,22 @@ versions:
     version: v1.2.6
     outputs:
       - name: olm_namespace
-        description: Namespace where OLM is running. The value will be different between OCP 4.3 and IKS/OCP 3.11
+        description: >-
+          Namespace where OLM is running. The value will be different between
+          OCP 4.3 and IKS/OCP 3.11
       - name: target_namespace
         description: Namespace where operatoes will be installed
   - dependencies:
       - id: cluster
         refs:
           - source: github.com/ibm-garage-cloud/terraform-ibm-container-platform
-            version: ">= 1.7.0"
+            version: '>= 1.7.0'
           - source: github.com/ibm-garage-cloud/terraform-ibm-ocp-vpc
-            version: ">= 1.0.0"
+            version: '>= 1.0.0'
           - source: github.com/ibm-garage-cloud/terraform-k8s-ocp-cluster
-            version: ">= 2.0.0"
+            version: '>= 2.0.0'
           - source: github.com/ibm-garage-cloud/terraform-ocp-login
-            version: ">= 1.0.0"
+            version: '>= 1.0.0'
     variables:
       - name: cluster_config_file
         moduleRef:
@@ -224,18 +271,20 @@ versions:
     version: v1.2.5
     outputs:
       - name: olm_namespace
-        description: Namespace where OLM is running. The value will be different between OCP 4.3 and IKS/OCP 3.11
+        description: >-
+          Namespace where OLM is running. The value will be different between
+          OCP 4.3 and IKS/OCP 3.11
       - name: target_namespace
         description: Namespace where operatoes will be installed
   - dependencies:
       - id: cluster
         refs:
           - source: github.com/ibm-garage-cloud/terraform-ibm-container-platform
-            version: ">= 1.7.0"
+            version: '>= 1.7.0'
           - source: github.com/ibm-garage-cloud/terraform-ibm-ocp-vpc
-            version: ">= 1.0.0"
+            version: '>= 1.0.0'
           - source: github.com/ibm-garage-cloud/terraform-k8s-ocp-cluster
-            version: ">= 2.0.0"
+            version: '>= 2.0.0'
     variables:
       - name: cluster_config_file
         moduleRef:
@@ -264,16 +313,18 @@ versions:
     version: v1.2.4
     outputs:
       - name: olm_namespace
-        description: Namespace where OLM is running. The value will be different between OCP 4.3 and IKS/OCP 3.11
+        description: >-
+          Namespace where OLM is running. The value will be different between
+          OCP 4.3 and IKS/OCP 3.11
       - name: target_namespace
         description: Namespace where operatoes will be installed
   - dependencies:
       - id: cluster
         refs:
           - source: github.com/ibm-garage-cloud/terraform-ibm-container-platform
-            version: ">= 1.7.0"
+            version: '>= 1.7.0'
           - source: github.com/ibm-garage-cloud/terraform-k8s-ocp-cluster
-            version: ">= 2.0.0"
+            version: '>= 2.0.0'
     variables:
       - name: cluster_config_file
         moduleRef:
@@ -304,16 +355,18 @@ versions:
     version: v1.2.3
     outputs:
       - name: olm_namespace
-        description: Namespace where OLM is running. The value will be different between OCP 4.3 and IKS/OCP 3.11
+        description: >-
+          Namespace where OLM is running. The value will be different between
+          OCP 4.3 and IKS/OCP 3.11
       - name: target_namespace
         description: Namespace where operatoes will be installed
   - dependencies:
       - id: cluster
         refs:
           - source: github.com/ibm-garage-cloud/terraform-ibm-container-platform
-            version: ">= 1.7.0"
+            version: '>= 1.7.0'
           - source: github.com/ibm-garage-cloud/terraform-k8s-ocp-cluster
-            version: ">= 2.0.0"
+            version: '>= 2.0.0'
     variables:
       - name: cluster_config_file
         moduleRef:
@@ -342,6 +395,13 @@ versions:
     version: v1.2.2
     outputs:
       - name: olm_namespace
-        description: Namespace where OLM is running. The value will be different between OCP 4.3 and IKS/OCP 3.11
+        description: >-
+          Namespace where OLM is running. The value will be different between
+          OCP 4.3 and IKS/OCP 3.11
       - name: target_namespace
         description: Namespace where operatoes will be installed
+documentation: >
+  If the cluster is OpenShift 4.x and already has OLM installed then the module
+  does not install anything. It can still 
+
+  be used to export the olm namespaces for use by downstream modules.
