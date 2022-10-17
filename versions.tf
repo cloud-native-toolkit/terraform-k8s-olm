@@ -1,7 +1,7 @@
 terraform {
   required_providers {
-    helm = {
-      version = ">= 1.1.1"
+    clis = {
+      source = "cloud-native-toolkit/clis"
     }
   }
   required_version = ">= 0.12"

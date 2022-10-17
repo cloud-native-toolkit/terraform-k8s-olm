@@ -2,6 +2,10 @@
 
 SCRIPT_DIR=$(cd $(dirname $0); pwd -P)
 
+if [[ -n "${BIN_DIR}" ]]; then
+  export PATH="${BIN_DIR}:${PATH}"
+fi
+
 echo "CLUSTER_TYPE: ${CLUSTER_TYPE}"
 if [[ "${CLUSTER_TYPE}" == "ocp4" ]]; then
   echo "Cluster version already had OLM: ${CLUSTER_VERSION}"

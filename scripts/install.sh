@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
-
 # This script is for installing OLM from a GitHub release
+
+if [[ -n "${BIN_DIR}" ]]; then
+  export PATH="${BIN_DIR}:${PATH}"
+fi
+
 
 set -e
 
