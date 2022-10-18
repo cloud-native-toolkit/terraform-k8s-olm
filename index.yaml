@@ -38,6 +38,45 @@ versions:
       - name: olm_version
         type: string
         description: The version of olm that will be installed
+        default: v0.18.1
+        scope: ignore
+    version: v1.3.4
+    outputs:
+      - name: olm_namespace
+        description: >-
+          Namespace where OLM is running. The value will be different between
+          OCP 4.3 and IKS/OCP 3.11
+      - name: target_namespace
+        description: Namespace where operatoes will be installed
+  - dependencies:
+      - id: cluster
+        interface: github.com/cloud-native-toolkit/automation-modules#cluster
+        refs: []
+    providers:
+      - name: clis
+        source: cloud-native-toolkit/clis
+    variables:
+      - name: cluster_type
+        type: string
+        description: The type of cluster (openshift or kubernetes)
+        moduleRef:
+          id: cluster
+          output: platform.type_code
+      - name: cluster_version
+        type: string
+        description: The version of cluster
+        moduleRef:
+          id: cluster
+          output: platform.version
+      - name: cluster_config_file
+        type: string
+        description: Cluster config file for Kubernetes cluster.
+        moduleRef:
+          id: cluster
+          output: config_file_path
+      - name: olm_version
+        type: string
+        description: The version of olm that will be installed
         default: 0.18.1
         scope: ignore
     version: v1.3.3
