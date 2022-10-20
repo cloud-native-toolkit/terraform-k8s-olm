@@ -9,3 +9,9 @@ output "target_namespace" {
   description = "Namespace where operatoes will be installed"
   depends_on  = [null_resource.deploy_operator_lifecycle_manager]
 }
+
+output "operator_namespace" {
+  value       = local.operator_namespace
+  description = "Name space where catalog is running - and subscriptions need to be made"
+  depends_on  = [null_resource.deploy_operator_lifecycle_manager]
+}
