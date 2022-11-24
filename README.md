@@ -10,9 +10,10 @@ the olm namespaces for use by downstream modules.
 module "dev_software_olm_release" {
   source = "github.com/ibm-garage-cloud/garage-terraform-modules.git//self-managed/software/operator-lifecycle-manager?ref=olm"
 
-  cluster_config_file      = "~/.kube/config"
+  cluster_config_file      = pathexpand("~/.kube/config")
   cluster_version          = "3.11"
   cluster_type             = "ocp3"
+  olm_version              = "v0.20.0"
 }
 ```
 
