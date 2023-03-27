@@ -26,32 +26,8 @@ variable "cluster_name" {
   default     = ""
 }
 
-variable "cluster_type" {
-  type        = string
-  description = "The type of cluster that should be created (openshift or kubernetes)"
-}
-
-variable "cluster_exists" {
-  type        = string
-  description = "Flag indicating if the cluster already exists (true or false)"
-  default     = "true"
-}
-
 variable "name_prefix" {
   type        = string
   description = "Prefix name that should be used for the cluster and services. If not provided then resource_group_name will be used"
   default     = ""
-}
-
-variable "vpc_cluster" {
-  type        = bool
-  description = "Flag indicating that this is a vpc cluster"
-  default     = false
-}
-
-variable "server_url" {
-}
-
-variable "ingress_subdomain" {
-  default = ""
 }

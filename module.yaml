@@ -23,14 +23,6 @@ versions:
       moduleRef:
         id: cluster
         output: config_file_path
-    - name: cluster_type
-      moduleRef:
-        id: cluster
-        output: platform.type_code
-    - name: cluster_version
-      moduleRef:
-        id: cluster
-        output: platform.version
     - name: olm_version
       scope: ignore
 

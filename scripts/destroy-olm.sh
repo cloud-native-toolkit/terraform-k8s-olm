@@ -6,14 +6,23 @@ if [[ -n "${BIN_DIR}" ]]; then
   export PATH="${BIN_DIR}:${PATH}"
 fi
 
-echo "CLUSTER_TYPE: ${CLUSTER_TYPE}"
-if [[ "${CLUSTER_TYPE}" == "ocp4" ]]; then
-  echo "Cluster version already had OLM: ${CLUSTER_VERSION}"
+UUID="$1"
+
+if ! kubectl get configmap olm-install -n default 1> /dev/null 2> /dev/null; then
+  echo "OLM install configmap not found. Skipping destroy"
   exit 0
 fi
 
-kubectl delete deployment -n olm --all
-kubectl delete namespace olm --wait=false
-"${SCRIPT_DIR}/kill-kube-ns" olm
-kubectl delete namespace olm
-exit 0
+OLM_CONFIG=$(kubectl get configmap olm-install -n default -o json | jq -c '.data')
+
+CLUSTER_UUID=$(echo "${OLM_CONFIG}" | jq -r '.uuid')
+CLUSTER_VERSION=$(echo "${OLM_CONFIG}" | jq -r '.version')
+
+if [[ "${CLUSTER_UUID}" != "${UUID}" ]]; then
+  echo "UUID of module does not match installed OLM. Skipping destroy"
+  exit 0
+fi
+
+operator-sdk olm uninstall --version "${CLUSTER_VERSION}" || exit 1
+
+kubectl delete configmap olm-install -n default || exit 0

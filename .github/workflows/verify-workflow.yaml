@@ -11,12 +11,12 @@ on:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    container: quay.io/cloudnativetoolkit/terraform:v1.2
 
     strategy:
       matrix:
         testcase:
           - ocp4_latest
+          - iks_latest
       fail-fast: false
       max-parallel: 1
 
@@ -26,22 +26,28 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
+
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.2.9
 
       - name: Verify deploy on ${{ matrix.testcase }}
-        uses: cloud-native-toolkit/action-module-verify-deploy@main
+        uses: cloud-native-toolkit/action-module-verify-deploy@v2
         with:
-          clusterId: ${{ matrix.testcase }}
+          testcase: ${{ matrix.testcase }}
+          testStagesDir: example
           validateDeployScript: .github/scripts/validate-deploy.sh
         env:
           TF_VAR_ibmcloud_api_key: ${{ secrets.IBMCLOUD_API_KEY }}
           IBMCLOUD_API_KEY: ${{ secrets.IBMCLOUD_API_KEY }}
 
       - name: Verify destroy on ${{ matrix.testcase }}
-        uses: cloud-native-toolkit/action-module-verify-destroy@main
+        uses: cloud-native-toolkit/action-module-verify-destroy@v2
         if: ${{ always() }}
         with:
-          clusterId: ${{ matrix.testcase }}
+          testcase: ${{ matrix.testcase }}
+          testStagesDir: example
         env:
           TF_VAR_ibmcloud_api_key: ${{ secrets.IBMCLOUD_API_KEY }}
           IBMCLOUD_API_KEY: ${{ secrets.IBMCLOUD_API_KEY }}
