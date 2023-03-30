@@ -23,6 +23,6 @@ if [[ "${CLUSTER_UUID}" != "${UUID}" ]]; then
   exit 0
 fi
 
-operator-sdk olm uninstall --version "${CLUSTER_VERSION}" || exit 1
+operator-sdk olm uninstall || exit 1
 
 kubectl delete configmap olm-install -n default || exit 0
