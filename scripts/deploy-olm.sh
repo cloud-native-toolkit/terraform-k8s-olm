@@ -21,4 +21,7 @@ operator-sdk olm install --version "${OLM_VERSION}" || exit 1
 kubectl create configmap olm-install \
   -n default \
   --from-literal="uuid=$UUID" \
-  --from-literal="version=${OLM_VERSION}"
+  --from-literal="version=${OLM_VERSION}" \
+  --dry-run=client \
+  --output=json | \
+  kubectl apply -f -
