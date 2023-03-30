@@ -39,4 +39,4 @@ elif kubectl get namespace operators 1> /dev/null 2> /dev/null; then
 fi
 
 jq -n --arg operator "${operator_namespace}" --arg target "${target_namespace}" \
-  '{"operator_namespace": $operator. "target_namespace": $target, "olm_namespace": $operator}'
+  '{"operator_namespace": $operator, "target_namespace": $target, "olm_namespace": $operator}'
