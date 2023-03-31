@@ -28,6 +28,37 @@ versions:
         description: The version of olm that will be installed
         default: v0.24.0
         scope: ignore
+    version: v2.0.1
+    outputs:
+      - name: olm_namespace
+        description: >-
+          Namespace where OLM is running. The value will be different between
+          OCP 4.3 and IKS/OCP 3.11
+      - name: target_namespace
+        description: Namespace where operatoes will be installed
+      - name: operator_namespace
+        description: >-
+          Name space where catalog is running - and subscriptions need to be
+          made
+  - dependencies:
+      - id: cluster
+        interface: github.com/cloud-native-toolkit/automation-modules#cluster
+        refs: []
+    providers:
+      - name: clis
+        source: cloud-native-toolkit/clis
+    variables:
+      - name: cluster_config_file
+        type: string
+        description: Cluster config file for Kubernetes cluster.
+        moduleRef:
+          id: cluster
+          output: config_file_path
+      - name: olm_version
+        type: string
+        description: The version of olm that will be installed
+        default: v0.24.0
+        scope: ignore
     version: v2.0.0
     outputs:
       - name: olm_namespace
