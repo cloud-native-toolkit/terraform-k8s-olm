@@ -1,16 +1,27 @@
 #!/usr/bin/env bash
 
-SCRIPT_DIR=$(cd $(dirname "$0"); pwd -P)
-
 if [[ -n "${BIN_DIR}" ]]; then
   export PATH="${BIN_DIR}:${PATH}"
 fi
 
 OLM_VERSION="$1"
+UUID="$2"
 
-if kubectl get project.project.openshift.io 1> /dev/null 2> /dev/null; then
-  echo "Cluster version already has OLM: ${CLUSTER_VERSION}"
+if kubectl get crd subscriptions.operators.coreos.com 1> /dev/null 2> /dev/null; then
+  echo "OLM is already installed"
   exit 0
 fi
 
-"${SCRIPT_DIR}/install.sh" "${OLM_VERSION}"
+if [[ -z "${OLM_VERSION}" ]]; then
+  OLM_VERSION="latest"
+fi
+
+operator-sdk olm install --version "${OLM_VERSION}" || exit 1
+
+kubectl create configmap olm-install \
+  -n default \
+  --from-literal="uuid=$UUID" \
+  --from-literal="version=${OLM_VERSION}" \
+  --dry-run=client \
+  --output=json | \
+  kubectl apply -f -
